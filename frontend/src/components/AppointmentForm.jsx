@@ -1,12 +1,16 @@
 import axios from "axios";
 import React, { useEffect } from "react";
+import { useContext } from "react";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { Context } from "../main";
 
 const AppointmentForm = () => {
+
+  const { user } = useContext(Context);
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [nic, setNic] = useState("");
   const [dob, setDob] = useState("");
@@ -51,7 +55,7 @@ const AppointmentForm = () => {
         {
           firstName,
           lastName,
-          email,
+          email:user.email,
           phone,
           nic,
           dob,
@@ -71,7 +75,6 @@ const AppointmentForm = () => {
       toast.success(data.message);
       setFirstName(""),
         setLastName(""),
-        setEmail(""),
         setPhone(""),
         setNic(""),
         setDob(""),
@@ -110,8 +113,9 @@ const AppointmentForm = () => {
             <input
               type="text"
               placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={user.email}
+              disabled
+              style={{backgroundColor:"white"}}
             />
             <input
               type="number"

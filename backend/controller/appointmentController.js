@@ -88,6 +88,15 @@ export const getAllAppointments = catchAsyncErrors(async (req, res, next) => {
     appointments,
   });
 });
+
+export const getPatientAppointments = catchAsyncErrors(async (req, res, next) => {
+  const appointments = await Appointment.find({email: req.user.email});
+  res.status(200).json({
+    success: true,
+    appointments,
+  })
+})
+
 export const updateAppointmentStatus = catchAsyncErrors(
   async (req, res, next) => {
     const { id } = req.params;

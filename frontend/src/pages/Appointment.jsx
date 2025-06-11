@@ -1,5 +1,6 @@
 import Hero from "../components/Hero";
 import AppointmentForm from "../components/AppointmentForm";
+import MyAppointment from "../components/MyAppointment";
 
 const Appointment = () => {
   return (
@@ -9,6 +10,7 @@ const Appointment = () => {
         imageUrl={"/signin.png"}
       />
       <AppointmentForm/>
+      <MyAppointment/>
     </>
   );
 };

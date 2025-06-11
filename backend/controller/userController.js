@@ -207,6 +207,7 @@ export const addNewDoctor = catchAsyncErrors(async (req, res, next) => {
       new ErrorHandler("Failed To Upload Doctor Avatar To Cloudinary", 500)
     );
   }
+  console.log(cloudinaryResponse.secure_url)
   const doctor = await User.create({
     firstName,
     lastName,
@@ -223,6 +224,7 @@ export const addNewDoctor = catchAsyncErrors(async (req, res, next) => {
       url: cloudinaryResponse.secure_url,
     },
   });
+  console.log(doctor)
   res.status(200).json({
     success: true,
     message: "New Doctor Registered",
