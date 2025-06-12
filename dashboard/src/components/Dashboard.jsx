@@ -57,6 +57,26 @@ const Dashboard = () => {
     }
   };
 
+  const handleVisited = async (appointmentId, hasVisited) => {
+    try {
+      const { data } = await axios.put(
+        `http://localhost:5000/api/v1/appointment/update/visited/${appointmentId}`,
+        { hasVisited },
+        { withCredentials: true }
+      );
+      setAppointments((prevAppointments) =>
+        prevAppointments.map((appointment) =>
+          appointment._id === appointmentId
+            ? { ...appointment, hasVisited, status:"Accepted" }
+            : appointment
+        )
+      );
+      toast.success(data.message);
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
+
   const { isAuthenticated, admin } = useContext(Context);
   if (!isAuthenticated) {
     return <Navigate to={"/login"} />;
@@ -71,10 +91,7 @@ const Dashboard = () => {
             <div className="content">
               <div>
                 <p>Hello ,</p>
-                <h5>
-                  {admin &&
-                    `${admin.firstName} ${admin.lastName}`}{" "}
-                </h5>
+                <h5>{admin && `${admin.firstName} ${admin.lastName}`} </h5>
               </div>
               <p>
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit.
@@ -116,12 +133,13 @@ const Dashboard = () => {
                       <td>
                         <select
                           className={
-                            appointment.status === "Pending"
+                              appointment.status === "Pending"
                               ? "value-pending"
                               : appointment.status === "Accepted"
                               ? "value-accepted"
                               : "value-rejected"
                           }
+                          disabled={appointment.hasVisited}
                           value={appointment.status}
                           onChange={(e) =>
                             handleUpdateStatus(appointment._id, e.target.value)
@@ -138,7 +156,20 @@ const Dashboard = () => {
                           </option>
                         </select>
                       </td>
-                      <td>{appointment.hasVisited === true ? <GoCheckCircleFill className="green"/> : <AiFillCloseCircle className="red"/>}</td>
+                      <td
+                        onClick={() => {
+                          handleVisited(
+                            appointment._id,
+                            !appointment.hasVisited
+                          );
+                        }}
+                      >
+                        {appointment.hasVisited === true ? (
+                          <GoCheckCircleFill className="green" />
+                        ) : (
+                          <AiFillCloseCircle className="red" />
+                        )}
+                      </td>
                     </tr>
                   ))
                 : "No Appointments Found!"}

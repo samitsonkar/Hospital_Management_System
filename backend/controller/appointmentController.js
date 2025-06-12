@@ -115,6 +115,29 @@ export const updateAppointmentStatus = catchAsyncErrors(
     });
   }
 );
+
+export const updateVisitedStatus = catchAsyncErrors(
+  async (req, res, next) => {
+    const { id } = req.params;
+    let appointment = await Appointment.findById(id);
+    if (!appointment) {
+      return next(new ErrorHandler("Appointment not found!", 404));
+    }
+    if(appointment.status==="Rejected") {
+      return next(new ErrorHandler("Rejected Patient Can't visit", 404));
+    }
+    appointment = await Appointment.findByIdAndUpdate(id, {...req.body, status:"Accepted"}, {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    });
+    res.status(200).json({
+      success: true,
+      message: appointment.hasVisited?"Patient Marked Visited":"Patient Marked Non-Visited",
+    });
+  }
+);
+
 export const deleteAppointment = catchAsyncErrors(async (req, res, next) => {
   const { id } = req.params;
   const appointment = await Appointment.findById(id);
