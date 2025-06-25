@@ -30,9 +30,9 @@ app.use(
   })
 );
 
-app.use("/api/v1/message", messageRouter);
-app.use("/api/v1/user", userRouter);
-app.use("/api/v1/appointment", appointmentRouter)
+app.use("/message", messageRouter);
+app.use("/user", userRouter);
+app.use("/appointment", appointmentRouter)
 
 dbConnection();
 
