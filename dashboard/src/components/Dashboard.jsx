@@ -14,7 +14,7 @@ const Dashboard = () => {
     const fetchAppointments = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:5000/api/v1/appointment/getall",
+          `${import.meta.env.VITE_API_URL}/appointment/getall`,
           { withCredentials: true }
         );
         setAppointments(data.appointments);
@@ -25,7 +25,7 @@ const Dashboard = () => {
     const fetchDoctors = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:5000/api/v1/user/doctors",
+          `${import.meta.env.VITE_API_URL}/user/doctors`,
           { withCredentials: true }
         );
         setDoctors(data.doctors);
@@ -40,7 +40,7 @@ const Dashboard = () => {
   const handleUpdateStatus = async (appointmentId, status) => {
     try {
       const { data } = await axios.put(
-        `http://localhost:5000/api/v1/appointment/update/${appointmentId}`,
+        `${import.meta.env.VITE_API_URL}/appointment/update/${appointmentId}`,
         { status },
         { withCredentials: true }
       );
@@ -60,7 +60,7 @@ const Dashboard = () => {
   const handleVisited = async (appointmentId, hasVisited) => {
     try {
       const { data } = await axios.put(
-        `http://localhost:5000/api/v1/appointment/update/visited/${appointmentId}`,
+        `${import.meta.env.VITE_API_URL}/appointment/update/visited/${appointmentId}`,
         { hasVisited },
         { withCredentials: true }
       );

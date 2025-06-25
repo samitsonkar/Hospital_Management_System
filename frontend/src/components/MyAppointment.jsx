@@ -12,7 +12,7 @@ const MyAppointment = () => {
     const fetchAppointments = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:5000/api/v1/appointment/getmy",
+          `${import.meta.env.VITE_API_URL}/appointment/getmy`,
           { withCredentials: true }
         );
         setAppointments(data.appointments);
