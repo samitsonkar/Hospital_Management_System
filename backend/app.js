@@ -9,8 +9,9 @@ import { errorMiddleware } from "./middlewares/error.js";
 import userRouter from "./router/userRouter.js";
 import appointmentRouter from "./router/appointmentRouter.js";
 
-const app = express();
 config();
+const app = express();
+app.set("trust proxy", 1);
 
 app.use(
   cors({
