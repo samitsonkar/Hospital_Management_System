@@ -10,7 +10,7 @@ export const generateToken = (user, message, statusCode, res) => {
       expires: new Date(Date.now() + cookieExpireDays * 24 * 60 * 60 * 1000),
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "None",
+      // sameSite: "None",
     })
     .json({
       success: true,
